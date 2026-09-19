@@ -102,17 +102,6 @@ export function Navbar() {
             })}
           </div>
 
-          {/* Resume button */}
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            download
-            className="btn-outline-light"
-            style={{ fontSize: "0.62rem", padding: "0.45rem 1rem" }}
-          >
-            Resume ↓
-          </a>
         </nav>
       </div>
     </header>
