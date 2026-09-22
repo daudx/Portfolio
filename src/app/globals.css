@@ -1,38 +1,33 @@
 @import "tailwindcss";
 
 /* ================================================================
-   UNDISPUTED — DESIGN TOKENS
+   NEO-BRUTALIST WIREFRAME TECH — DESIGN TOKENS
    ================================================================ */
 
 :root {
-  /* Core palette */
-  --color-primary: #121212;
-  --color-secondary: #D96C3A;
-  --color-tertiary: #6B6B68;
-  --color-neutral: #F6F4EF;
-
-  /* Hairlines */
-  --color-hairline-light: #D8D4C9;
-  --color-hairline-dark: #2A2A28;
-
-  /* Text on light */
-  --color-ink: #121212;
-  --color-ink-muted: #6B6B68;
-  --color-ink-faint: #A8A49E;
-
-  /* Text on dark */
-  --color-on-dark: #F6F4EF;
-  --color-on-dark-muted: #9A9690;
-  --color-on-dark-faint: #5A5854;
+  /* Neo Palette */
+  --neo-bg: #F5F5EE;
+  --neo-card-bg: #FFFFFF;
+  --neo-green: #A6FA3C;
+  --neo-green-hover: #96EA2C;
+  --neo-pink: #FF499E;
+  --neo-pink-hover: #EF398E;
+  --neo-purple: #6366F1;
+  --neo-purple-hover: #4F46E5;
+  --neo-yellow: #FFD028;
+  --neo-cyan: #38BDF8;
+  --neo-border-color: #000000;
+  --neo-text: #000000;
+  --neo-muted: #555555;
+  --neo-faint: #888888;
 
   /* Fonts */
-  --font-inter: "Inter", sans-serif;
-  --font-newsreader: "Newsreader", serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Space Mono", ui-monospace, monospace;
 }
 
 /* ================================================================
-   GLOBAL RESET
+   GLOBAL RESET & GRAPH PAPER GRID BACKGROUND
    ================================================================ */
 
 * {
@@ -48,399 +43,224 @@ html {
 }
 
 body {
-  background-color: var(--color-neutral);
-  color: var(--color-ink);
+  background-color: var(--neo-bg);
+  color: var(--neo-text);
   font-family: var(--font-inter);
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   line-height: 1.5;
+  
+  /* Graph Paper Grid Pattern */
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: center center;
 }
 
 /* ================================================================
-   TYPOGRAPHY — EDITORIAL SCALE
-   ================================================================ */
-
-/* Newsreader headline sizes */
-.text-display {
-  font-family: var(--font-newsreader);
-  font-size: clamp(3rem, 8vw, 6.5rem);
-  font-weight: 400;
-  line-height: 1.0;
-  letter-spacing: -0.02em;
-  font-style: italic;
-}
-
-.text-headline-xl {
-  font-family: var(--font-newsreader);
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-
-.text-headline-lg {
-  font-family: var(--font-newsreader);
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-}
-
-.text-headline-md {
-  font-family: var(--font-newsreader);
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-}
-
-/* Inter body sizes */
-.text-body-lg {
-  font-family: var(--font-inter);
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
-  font-weight: 400;
-  line-height: 1.65;
-  color: var(--color-ink-muted);
-}
-
-.text-body {
-  font-family: var(--font-inter);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.6;
-}
-
-.text-body-sm {
-  font-family: var(--font-inter);
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.55;
-}
-
-/* JetBrains Mono label sizes */
-.mono {
-  font-family: var(--font-mono);
-  letter-spacing: 0.04em;
-}
-
-.mono-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-tertiary);
-}
-
-.mono-kicker {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-}
-
-/* ================================================================
-   CONTAINER SYSTEM — 1440px desktop-first
+   NEO-BRUTALIST CONTAINER & UTILITIES
    ================================================================ */
 
 .page-container {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1360px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
-/* ================================================================
-   SECTION SYSTEM — FULL-BLEED ALTERNATING BG
-   ================================================================ */
-
-.section-neutral {
-  background-color: var(--color-neutral);
-  color: var(--color-ink);
-}
-
-.section-primary {
-  background-color: var(--color-primary);
-  color: var(--color-on-dark);
-}
-
-/* Section index number in left margin */
-.section-index {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--color-ink-faint);
-}
-
-.section-index-dark {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--color-on-dark-faint);
-}
-
-/* ================================================================
-   HAIRLINE DIVIDERS
-   ================================================================ */
-
-.hairline-light {
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-hairline-light);
-}
-
-.hairline-dark {
-  width: 100%;
-  height: 1px;
-  background-color: var(--color-hairline-dark);
-}
-
-/* ================================================================
-   BUTTON SYSTEM
-   ================================================================ */
-
-/* Outlined on dark bg */
-.btn-outline-dark {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border: 1px solid var(--color-hairline-dark);
-  border-radius: 3px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-on-dark);
-  background: transparent;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.btn-outline-dark:hover {
-  border-color: var(--color-secondary);
-  color: var(--color-secondary);
-}
-
-/* Outlined on light bg */
-.btn-outline-light {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border: 1px solid var(--color-hairline-light);
-  border-radius: 3px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-ink);
-  background: transparent;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.btn-outline-light:hover {
-  border-color: var(--color-secondary);
-  color: var(--color-secondary);
-}
-
-/* Amber filled */
-.btn-amber {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  border: 1px solid var(--color-secondary);
-  border-radius: 3px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--color-secondary);
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.btn-amber:hover {
-  opacity: 0.88;
-}
-
-/* ================================================================
-   STATUS DOT
-   ================================================================ */
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.85); }
-}
-
-.status-dot-pulse {
-  animation: pulse-dot 2.2s ease-in-out infinite;
-}
-
-/* ================================================================
-   MARQUEE TICKER
-   ================================================================ */
-
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
-}
-
-.marquee-container {
-  display: flex;
-  overflow: hidden;
-  user-select: none;
-}
-
-.marquee-content {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  min-width: 100%;
-  animation: marquee 40s linear infinite;
-}
-
-.marquee-container:hover .marquee-content {
-  animation-play-state: paused;
-}
-
-/* ================================================================
-   PROFICIENCY DOTS
-   ================================================================ */
-
-.prof-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.prof-dot-filled {
-  background-color: var(--color-secondary);
-}
-
-.prof-dot-empty {
-  background-color: var(--color-hairline-light);
-}
-
-/* ================================================================
-   HEATMAP — AMBER GRADIENT
-   ================================================================ */
-
-.heat-0 { background-color: #E8E4DC; }
-.heat-1 { background-color: rgba(217, 108, 58, 0.25); }
-.heat-2 { background-color: rgba(217, 108, 58, 0.5); }
-.heat-3 { background-color: rgba(217, 108, 58, 0.75); }
-.heat-4 { background-color: #D96C3A; }
-
-/* ================================================================
-   UTILITY CLASSES
-   ================================================================ */
-
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: var(--color-neutral); }
-::-webkit-scrollbar-thumb { background: var(--color-hairline-light); border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-tertiary); }
-
-/* No scrollbar */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Focus visible */
-:focus-visible {
-  outline: 2px solid var(--color-secondary);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-/* Selection */
-::selection {
-  background: var(--color-primary);
-  color: var(--color-on-dark);
-}
-
-/* Amber selection on dark sections */
-.section-primary ::selection {
-  background: var(--color-secondary);
-  color: #fff;
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+@media (min-width: 768px) {
+  .page-container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
-  .marquee-content { animation: none !important; }
 }
 
-/* ================================================================
-   LEGACY COMPAT — keep eyebrow-pill for any stragglers
-   ================================================================ */
+/* Hard Drop Shadows */
+.shadow-neo-sm {
+  box-shadow: 2px 2px 0px 0px #000000;
+}
 
-.eyebrow-pill {
+.shadow-neo {
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+.shadow-neo-lg {
+  box-shadow: 6px 6px 0px 0px #000000;
+}
+
+.shadow-neo-xl {
+  box-shadow: 8px 8px 0px 0px #000000;
+}
+
+.shadow-neo-green {
+  box-shadow: 4px 4px 0px 0px var(--neo-green);
+}
+
+.shadow-neo-pink {
+  box-shadow: 4px 4px 0px 0px var(--neo-pink);
+}
+
+.shadow-neo-purple {
+  box-shadow: 4px 4px 0px 0px var(--neo-purple);
+}
+
+/* Neo Card Frames */
+.neo-card {
+  background-color: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 5px 5px 0px 0px #000000;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.neo-card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px 0px #000000;
+}
+
+.neo-card-pink {
+  background-color: var(--neo-pink);
+  border: 3px solid #000000;
+  box-shadow: 5px 5px 0px 0px #000000;
+}
+
+.neo-card-green {
+  background-color: var(--neo-green);
+  border: 3px solid #000000;
+  box-shadow: 5px 5px 0px 0px #000000;
+}
+
+.neo-card-purple {
+  background-color: var(--neo-purple);
+  border: 3px solid #000000;
+  box-shadow: 5px 5px 0px 0px #000000;
+  color: #ffffff;
+}
+
+/* Buttons */
+.neo-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border: 1px solid var(--color-hairline-light);
-  border-radius: 2px;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #000000;
+  background-color: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 3px 3px 0px 0px #000000;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  text-decoration: none;
+}
+
+.neo-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+.neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px 0px #000000;
+}
+
+.neo-btn-green {
+  background-color: var(--neo-green);
+}
+.neo-btn-green:hover {
+  background-color: var(--neo-green-hover);
+}
+
+.neo-btn-pink {
+  background-color: var(--neo-pink);
+  color: #000000;
+}
+.neo-btn-pink:hover {
+  background-color: var(--neo-pink-hover);
+}
+
+.neo-btn-purple {
+  background-color: var(--neo-purple);
+  color: #ffffff;
+}
+.neo-btn-purple:hover {
+  background-color: var(--neo-purple-hover);
+}
+
+.neo-btn-black {
+  background-color: #000000;
+  color: #ffffff;
+  box-shadow: 3px 3px 0px 0px var(--neo-green);
+}
+.neo-btn-black:hover {
+  background-color: #1a1a1a;
+  box-shadow: 4px 4px 0px 0px var(--neo-green);
+}
+
+/* Badges & Tags */
+.neo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--color-tertiary);
-  background: transparent;
+  border: 1.5px solid #000000;
+  box-shadow: 2px 2px 0px 0px #000000;
+  background-color: #ffffff;
+  color: #000000;
 }
 
-/* ================================================================
-   PROJECT CARD HOVER EFFECTS
-   ================================================================ */
-
-/* Image zoom on card hover */
-.project-card-wrap:hover .project-card-img {
-  transform: scale(1.04);
+.neo-badge-green {
+  background-color: var(--neo-green);
 }
 
-.project-card-img {
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.neo-badge-pink {
+  background-color: var(--neo-pink);
 }
 
-/* Card subtle highlight on hover */
-.project-card-wrap {
-  transition: background-color 0.2s ease;
-}
-.project-card-wrap:hover {
-  background-color: #161614 !important;
+.neo-badge-purple {
+  background-color: var(--neo-purple);
+  color: #ffffff;
 }
 
-/* ================================================================
-   NAV LINK HOVER
-   ================================================================ */
+.mono {
+  font-family: var(--font-mono);
+}
 
-.nav-link:hover {
-  color: var(--color-ink) !important;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--neo-bg);
+  border-left: 2px solid #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neo-pink);
+}
+
+/* Pulse animation */
+@keyframes neo-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+.neo-pulse {
+  animation: neo-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

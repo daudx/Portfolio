@@ -1,310 +1,226 @@
-import React from "react";
-import Image from "next/image";
-import { projects } from "@/data/projects";
+"use client";
 
-type StatusType = "Completed" | "In Development" | "Prototype";
+import React, { useState } from "react";
+import { projects, Project } from "@/data/projects";
+import { CertificationsCard } from "./certifications-card";
+import { Certification } from "@/data/certifications";
+import { 
+  ChevronLeft, 
+  ChevronRight, 
+  ArrowRight, 
+  ShieldCheck, 
+  Cpu, 
+  Terminal, 
+  ExternalLink,
+  Layers,
+  Sparkles
+} from "lucide-react";
 
-function statusBadge(status: StatusType): { label: string; color: string; bg: string } {
-  if (status === "Completed")      return { label: "LIVE",      color: "#D96C3A", bg: "rgba(217,108,58,0.12)" };
-  if (status === "In Development") return { label: "IN DEV",   color: "#9A9690", bg: "rgba(154,150,144,0.12)" };
-  return                                    { label: "PROTOTYPE", color: "#5A5854", bg: "rgba(90,88,84,0.12)"   };
+interface FeaturedProjectsProps {
+  onSelectProject: (project: Project) => void;
+  onSelectCert?: (cert: Certification) => void;
 }
 
-export function FeaturedProjects() {
-  const featured = projects.filter(p => p.featured);
-  const rest     = projects.filter(p => !p.featured);
-  const all      = [...featured, ...rest];
+export function FeaturedProjects({ onSelectProject, onSelectCert }: FeaturedProjectsProps) {
+  const featuredList = projects.filter((p) => p.featured);
+  const secondaryList = projects.filter((p) => !p.featured || p.id !== "dawacheck").slice(0, 4);
+
+  const [activeFeaturedIndex, setActiveFeaturedIndex] = useState(0);
+
+  const currentFeatured = featuredList[activeFeaturedIndex] || featuredList[0];
+
+  const handleNext = () => {
+    setActiveFeaturedIndex((prev) => (prev + 1) % featuredList.length);
+  };
+
+  const handlePrev = () => {
+    setActiveFeaturedIndex((prev) => (prev - 1 + featuredList.length) % featuredList.length);
+  };
 
   return (
-    <section
-      id="work"
-      className="section-primary"
-      style={{
-        borderTop: "1px solid var(--color-hairline-dark)",
-        paddingTop: "80px",
-        paddingBottom: "80px"
-      }}
-    >
+    <section id="projects" className="pb-12">
       <div className="page-container">
+        
+        {/* Main Grid: Projects (left 8 cols) + Certifications (right 4 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          {/* Projects Column (8 cols) */}
+          <div className="lg:col-span-8 flex flex-col justify-between space-y-6">
+            
+            {/* Header */}
+            <div className="flex flex-wrap items-center justify-between gap-4 bg-white border-3 border-black p-3.5 shadow-neo">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-base font-black text-black uppercase tracking-wide">
+                  FEATURED PROJECTS
+                </span>
+                <span className="bg-[#A6FA3C] border-2 border-black font-mono text-[11px] font-bold px-2 py-0.5 shadow-neo-sm">
+                  VIEW ALL (14+)
+                </span>
+              </div>
 
-        {/* ── Section header ─────────────────────────────────── */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            justifyContent: "space-between",
-            marginBottom: "48px",
-            paddingBottom: "14px",
-            borderBottom: "1px solid var(--color-hairline-dark)"
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "baseline", gap: "1.25rem" }}>
-            <span className="section-index-dark">03</span>
-            <h2 className="text-headline-md" style={{ color: "var(--color-on-dark)", fontStyle: "normal" }}>
-              Selected Work
-            </h2>
-          </div>
-          <span className="mono-label" style={{ color: "var(--color-on-dark-faint)" }}>
-            {all.length} projects
-          </span>
-        </div>
-
-        {/* ── 3-column card grid ─────────────────────────────── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1px",
-            backgroundColor: "var(--color-hairline-dark)"
-          }}
-        >
-          {all.map((project, idx) => {
-            const { label, color, bg } = statusBadge(project.status as StatusType);
-            return (
-              <div
-                key={project.id}
-                className="project-card-wrap"
-                style={{
-                  backgroundColor: "var(--color-primary)",
-                  display: "flex",
-                  flexDirection: "column"
-                }}
-              >
-                {/* Image area */}
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    aspectRatio: "16/9",
-                    backgroundColor: "#1A1A18",
-                    overflow: "hidden",
-                    borderBottom: "1px solid var(--color-hairline-dark)"
-                  }}
+              {/* Slider controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handlePrev}
+                  className="p-1.5 bg-white border-2 border-black text-black hover:bg-[#A6FA3C] shadow-neo-sm transition-all"
+                  aria-label="Previous Project"
                 >
-                  {project.image ? (
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 1440px) 33vw, 480px"
-                      className="object-cover project-card-img"
-                      unoptimized
-                    />
-                  ) : (
-                    /* Elegant placeholder when no image */
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "0.5rem",
-                        background: "linear-gradient(135deg, #1A1A18 0%, #222220 100%)"
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "var(--font-newsreader)",
-                          fontSize: "2rem",
-                          fontStyle: "italic",
-                          color: "rgba(246,244,239,0.15)",
-                          textAlign: "center",
-                          padding: "0 1.5rem"
-                        }}
-                      >
-                        {project.title}
-                      </span>
-                      <span className="mono-label" style={{ color: "rgba(246,244,239,0.2)" }}>
-                        {project.categoryTag}
-                      </span>
-                    </div>
-                  )}
+                  <ChevronLeft className="w-4 h-4 stroke-[3]" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="p-1.5 bg-white border-2 border-black text-black hover:bg-[#A6FA3C] shadow-neo-sm transition-all"
+                  aria-label="Next Project"
+                >
+                  <ChevronRight className="w-4 h-4 stroke-[3]" />
+                </button>
+              </div>
+            </div>
 
-                  {/* Index number */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      left: "12px",
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.6rem",
-                      fontWeight: 700,
-                      letterSpacing: "0.08em",
-                      color: "rgba(246,244,239,0.35)",
-                      lineHeight: 1
-                    }}
-                  >
-                    {String(idx + 1).padStart(2, "0")}
+            {/* Showcase Main Featured Project Card */}
+            <div className="neo-card p-6 bg-white space-y-5">
+              
+              {/* Wireframe Visual Preview Frame */}
+              <div className="border-3 border-black bg-[#A6FA3C] p-6 shadow-neo relative overflow-hidden flex flex-col justify-between min-h-[200px]">
+                {/* Visual Top Bar */}
+                <div className="flex items-center justify-between border-b-2 border-black pb-3 mb-6">
+                  <div className="flex items-center gap-2 bg-white border-2 border-black px-2.5 py-1 text-[11px] font-mono font-bold text-black shadow-neo-sm">
+                    <span>LIVE SYSTEM — DRAFT VERIFIED</span>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-5 h-5 text-black stroke-[2.5]" />
+                  </div>
+                </div>
 
-                  {/* Status badge */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      right: "12px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px",
-                      backgroundColor: bg,
-                      border: `1px solid ${color}33`,
-                      borderRadius: "2px",
-                      padding: "3px 8px"
-                    }}
-                  >
-                    <span style={{ width: "5px", height: "5px", borderRadius: "50%", backgroundColor: color, flexShrink: 0 }} />
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.15em", color }}>
-                      {label}
+                {/* Center Wireframe Graphic */}
+                <div className="my-4 text-center">
+                  <div className="inline-flex flex-col items-center justify-center bg-white border-3 border-black p-4 shadow-neo max-w-md mx-auto">
+                    <div className="flex items-center gap-2 text-red-600 font-mono text-xs font-black uppercase mb-1">
+                      <Sparkles className="w-4 h-4 stroke-[2.5]" />
+                      ANTI-COUNTERFEIT AI
+                    </div>
+                    <span className="font-mono text-[11px] text-black font-bold uppercase tracking-wider">
+                      GEN AI SEARCH • 99.8% RECALL ACCURACY
                     </span>
                   </div>
                 </div>
 
-                {/* Card body */}
-                <div
-                  style={{
-                    padding: "1.5rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    flex: 1
-                  }}
-                >
-                  {/* Category tag */}
-                  <span className="mono-label" style={{ color: "var(--color-on-dark-faint)", marginBottom: "0.625rem", display: "block" }}>
-                    {project.categoryTag} · {project.year}
+                {/* Visual Bottom Indicators */}
+                <div className="flex items-center justify-between border-t-2 border-black pt-3 mt-4 text-[11px] font-mono font-bold">
+                  <span className="bg-white border border-black px-2 py-0.5 text-black">
+                    STATUS: PRODUCTION
                   </span>
+                  <span className="bg-white border border-black px-2 py-0.5 text-black">
+                    BUILD v2.4
+                  </span>
+                </div>
+              </div>
 
-                  {/* Title */}
-                  <h3
-                    style={{
-                      fontFamily: "var(--font-newsreader)",
-                      fontSize: "1.375rem",
-                      fontWeight: 400,
-                      fontStyle: "normal",
-                      color: "var(--color-on-dark)",
-                      lineHeight: 1.2,
-                      marginBottom: "0.75rem"
-                    }}
-                  >
-                    {project.title}
+              {/* Featured Project Text Info */}
+              <div className="space-y-4 pt-1">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 className="text-2xl font-black text-black uppercase tracking-tight font-mono">
+                    {currentFeatured.title}
                   </h3>
+                  <span className="bg-gray-100 border-2 border-black px-2.5 py-0.5 font-mono text-[11px] font-bold text-black uppercase shadow-neo-sm">
+                    [ {currentFeatured.categoryTag} ]
+                  </span>
+                </div>
 
-                  {/* Description */}
-                  <p
-                    style={{
-                      fontFamily: "var(--font-inter)",
-                      fontSize: "0.8125rem",
-                      color: "var(--color-on-dark-muted)",
-                      lineHeight: 1.65,
-                      marginBottom: "1rem",
-                      flex: 1
-                    }}
+                <p className="font-mono text-xs text-gray-800 leading-relaxed">
+                  {currentFeatured.description}
+                </p>
+
+                {/* Tech Pills */}
+                <div className="flex flex-wrap gap-2">
+                  {currentFeatured.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="bg-white border border-black px-2 py-0.5 font-mono text-[10px] font-bold text-black shadow-neo-sm"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Footer Trigger & Dots */}
+                <div className="flex items-center justify-between pt-3 border-t-2 border-black">
+                  <button
+                    onClick={() => onSelectProject(currentFeatured)}
+                    className="neo-btn neo-btn-green py-2 px-4 text-xs"
                   >
-                    {project.description}
-                  </p>
+                    <span>VIEW DETAILS</span>
+                    <ArrowRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                  </button>
 
-                  {/* Tech pills */}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", marginBottom: "1.25rem" }}>
-                    {project.technologies.slice(0, 4).map(tech => (
+                  {/* Pagination dots */}
+                  <div className="flex items-center gap-1.5">
+                    {featuredList.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveFeaturedIndex(i)}
+                        className={`w-2.5 h-2.5 rounded-full border border-black transition-all ${
+                          i === activeFeaturedIndex ? "bg-black scale-110" : "bg-white"
+                        }`}
+                        aria-label={`Go to slide ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* Secondary 2x2 Grid Projects */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {secondaryList.map((proj) => (
+                <div
+                  key={proj.id}
+                  onClick={() => onSelectProject(proj)}
+                  className="neo-card p-4 bg-white hover:bg-[#F5F5EE] cursor-pointer flex flex-col justify-between space-y-3 group"
+                >
+                  <div>
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-mono text-[10px] font-bold text-black uppercase bg-[#F5F5EE] border border-black px-1.5 py-0.5">
+                        [ {proj.categoryTag} ]
+                      </span>
+                      <ExternalLink className="w-3.5 h-3.5 text-black group-hover:translate-x-[1px] transition-transform" />
+                    </div>
+
+                    <h4 className="font-mono text-sm font-black text-black uppercase tracking-tight group-hover:text-[#6366F1] transition-colors mb-1.5">
+                      {proj.title}
+                    </h4>
+
+                    <p className="font-mono text-[11px] text-gray-700 line-clamp-2 leading-relaxed mb-3">
+                      {proj.description}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-gray-200">
+                    {proj.technologies.slice(0, 3).map((tech) => (
                       <span
                         key={tech}
-                        style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: "0.575rem",
-                          fontWeight: 600,
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          color: "var(--color-on-dark-muted)",
-                          border: "1px solid var(--color-hairline-dark)",
-                          padding: "2px 7px",
-                          borderRadius: "2px"
-                        }}
+                        className="font-mono text-[9px] font-bold bg-white border border-black px-1.5 py-0.5"
                       >
                         {tech}
                       </span>
                     ))}
-                    {project.technologies.length > 4 && (
-                      <span
-                        style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: "0.575rem",
-                          fontWeight: 600,
-                          letterSpacing: "0.1em",
-                          textTransform: "uppercase",
-                          color: "var(--color-secondary)",
-                          border: "1px solid var(--color-hairline-dark)",
-                          padding: "2px 7px",
-                          borderRadius: "2px"
-                        }}
-                      >
-                        +{project.technologies.length - 4}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* CTA row */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.625rem", borderTop: "1px solid var(--color-hairline-dark)", paddingTop: "1.125rem" }}>
-                    {project.github && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-outline-dark"
-                        style={{ fontSize: "0.6rem", padding: "0.4rem 0.875rem" }}
-                      >
-                        Repo ↗
-                      </a>
-                    )}
-                    {project.live && (
-                      <a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-amber"
-                        style={{ fontSize: "0.6rem", padding: "0.4rem 0.875rem" }}
-                      >
-                        Live ↗
-                      </a>
-                    )}
-                    <span
-                      style={{
-                        marginLeft: "auto",
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "0.575rem",
-                        fontWeight: 600,
-                        letterSpacing: "0.12em",
-                        color: "var(--color-on-dark-faint)",
-                        textTransform: "uppercase"
-                      }}
-                    >
-                      {project.category}
-                    </span>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              ))}
+            </div>
 
-        {/* ── Archive link ───────────────────────────────────── */}
-        <div
-          style={{
-            marginTop: "3rem",
-            paddingTop: "2rem",
-            borderTop: "1px solid var(--color-hairline-dark)",
-            textAlign: "center"
-          }}
-        >
-          <a
-            href="https://github.com/daudx?tab=repositories"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline-dark"
-            style={{ fontSize: "0.62rem", padding: "0.65rem 2rem", letterSpacing: "0.2em" }}
-          >
-            VIEW ALL ARCHIVED REPOSITORIES ↗
-          </a>
+          </div>
+
+          {/* Certifications Sidebar Column (4 cols) */}
+          <div className="lg:col-span-4 flex">
+            <div className="w-full">
+              <CertificationsCard onSelectCert={onSelectCert} />
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

@@ -1,59 +1,59 @@
-import { getGitHubProfile, getGitHubContributions, getGitHubRepositories } from "@/lib/github";
+"use client";
+
+import React, { useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/hero";
-import { StackSection } from "@/components/stack-section";
-import { About } from "@/components/about";
-import { ProofStrip } from "@/components/proof-strip";
-import { GitHubSection } from "@/components/github-section";
+import { SkillsBar } from "@/components/skills-bar";
 import { FeaturedProjects } from "@/components/featured-projects";
-import { CommunityStrip } from "@/components/community-strip";
+import { ExperienceSection } from "@/components/experience-section";
+import { LearningJourney } from "@/components/learning-journey";
 import { Footer } from "@/components/footer";
+import { ProjectModal } from "@/components/project-modal";
+import { ContactModal } from "@/components/contact-modal";
+import { Project } from "@/data/projects";
 
-// ISR: revalidate cached GitHub data every hour
-export const revalidate = 3600;
-
-export default async function HomePage() {
-  // Server-side parallel fetch with resilience (timeouts + fallbacks in lib/github.ts)
-  const [profile, contributions, repos] = await Promise.all([
-    getGitHubProfile(),
-    getGitHubContributions(),
-    getGitHubRepositories()
-  ]);
+export default function HomePage() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
-    <div className="antialiased" style={{ minHeight: "100vh" }}>
-      {/* ── 0. Sticky navigation ────────────────────────────── */}
-      <Navbar />
+    <div className="min-h-screen bg-[#F5F5EE] antialiased text-black">
+      {/* ── Navbar ─────────────────────────────────────────── */}
+      <Navbar onOpenContact={() => setIsContactOpen(true)} />
 
-      <main>
-        {/* ── 1. Hero (Primary dark bg) ────────────────────── */}
-        <Hero />
+      <main className="space-y-4">
+        {/* ── Hero Section ───────────────────────────────────── */}
+        <Hero onOpenContact={() => setIsContactOpen(true)} />
 
-        {/* ── 00. Stack (Neutral bg) ───────────────────────── */}
-        <StackSection />
+        {/* ── Skills Bar ─────────────────────────────────────── */}
+        <SkillsBar />
 
-        {/* ── 01. About (Primary dark bg) ──────────────────── */}
-        <About />
-
-        {/* ── Proof strip (Neutral hairline) ────────────────── */}
-        <ProofStrip />
-
-        {/* ── 02. GitHub Live Panel (Neutral bg) ───────────── */}
-        <GitHubSection
-          profile={profile}
-          contributions={contributions}
-          repos={repos}
+        {/* ── Featured Projects & Certifications ─────────────── */}
+        <FeaturedProjects
+          onSelectProject={(project) => setSelectedProject(project)}
         />
 
-        {/* ── 03. Selected Work (Primary dark bg) ───────────── */}
-        <FeaturedProjects />
+        {/* ── Experience Timeline & Collaboration ───────────── */}
+        <ExperienceSection onOpenContact={() => setIsContactOpen(true)} />
 
-        {/* ── 04. Community & Systems (Neutral bg) ──────────── */}
-        <CommunityStrip />
+        {/* ── Learning Journey Growth Chart ───────────────────── */}
+        <LearningJourney onOpenContact={() => setIsContactOpen(true)} />
       </main>
 
-      {/* ── Footer / Contact (Neutral bg + UNDISPUTED) ────── */}
+      {/* ── Footer ─────────────────────────────────────────── */}
       <Footer />
+
+      {/* ── Modals ─────────────────────────────────────────── */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+        onOpenContact={() => setIsContactOpen(true)}
+      />
+
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
     </div>
   );
 }

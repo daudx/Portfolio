@@ -2,162 +2,75 @@
 
 import React from "react";
 import { siteConfig } from "@/data/site";
-import { ArrowUpRight } from "lucide-react";
+import { Code2, Mail, ArrowUp } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 
 export function Footer() {
-  const year = new Date().getFullYear();
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <footer
-      id="contact"
-      className="section-neutral"
-      style={{
-        borderTop: "1px solid var(--color-hairline-light)"
-      }}
-    >
-      {/* ── CTA section ───────────────────────────────────────────── */}
-      <div
-        className="page-container"
-        style={{ paddingTop: "80px", paddingBottom: "64px" }}
-      >
-        <div
-          style={{
-            borderBottom: "1px solid var(--color-hairline-light)",
-            paddingBottom: "64px",
-            marginBottom: "48px"
-          }}
-        >
-          {/* Availability line */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              marginBottom: "2rem"
-            }}
-          >
-            <span
-              style={{
-                width: "7px",
-                height: "7px",
-                borderRadius: "50%",
-                backgroundColor: "var(--color-secondary)",
-                display: "inline-block",
-                flexShrink: 0
-              }}
-            />
-            <span className="mono-label" style={{ color: "var(--color-secondary)" }}>
-              {siteConfig.availability}
-            </span>
+    <footer id="contact" className="bg-[#F5F5EE] border-t-3 border-black py-8 font-mono">
+      <div className="page-container">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          {/* Logo Badge */}
+          <div className="flex items-center gap-3">
+            <a
+              href="#"
+              className="inline-flex items-center gap-2 bg-[#A6FA3C] border-2 border-black px-3 py-1.5 text-xs font-bold tracking-wider text-black shadow-neo-sm hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all"
+            >
+              <Code2 className="w-4 h-4 stroke-[2.5]" />
+              <span>./ DAWOOD DEV</span>
+            </a>
           </div>
 
-          {/* Headline */}
-          <h2
-            style={{
-              fontFamily: "var(--font-newsreader)",
-              fontSize: "clamp(3rem, 7vw, 5.5rem)",
-              fontWeight: 400,
-              lineHeight: 1.0,
-              color: "var(--color-ink)",
-              marginBottom: "2.5rem"
-            }}
-          >
-            Let&apos;s build something
-            <span style={{ color: "var(--color-secondary)" }}>.</span>
-          </h2>
-
-          {/* Link columns */}
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "4rem" }}>
-            {/* GitHub */}
-            <div>
-              <span className="mono-kicker" style={{ color: "var(--color-tertiary)", display: "block", marginBottom: "0.75rem" }}>
-                GitHub
-              </span>
-              <a
-                href={siteConfig.github.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-link"
-              >
-                github.com/daudx <ArrowUpRight size={14} style={{ display: "inline" }} />
-              </a>
-            </div>
-
-            {/* Divider */}
-            <div style={{ width: "1px", height: "48px", backgroundColor: "var(--color-hairline-light)", marginTop: "1.5rem" }} />
-
-            {/* LinkedIn */}
-            <div>
-              <span className="mono-kicker" style={{ color: "var(--color-tertiary)", display: "block", marginBottom: "0.75rem" }}>
-                LinkedIn
-              </span>
-              <a
-                href={siteConfig.linkedin.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-link"
-              >
-                linkedin.com/in/dawood-sajid <ArrowUpRight size={14} style={{ display: "inline" }} />
-              </a>
-            </div>
-
-            {/* Divider */}
-            <div style={{ width: "1px", height: "48px", backgroundColor: "var(--color-hairline-light)", marginTop: "1.5rem" }} />
-
-            {/* Email */}
-            <div>
-              <span className="mono-kicker" style={{ color: "var(--color-tertiary)", display: "block", marginBottom: "0.75rem" }}>
-                Email
-              </span>
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="footer-link"
-              >
-                {siteConfig.email} ↗
-              </a>
-            </div>
+          {/* Copyright Notice */}
+          <div className="text-xs text-gray-700 font-bold text-center">
+            © 2026 Dawood Sajid. All rights reserved.
           </div>
-        </div>
 
-        {/* Bottom bar */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between"
-          }}
-        >
-          <span className="mono-label" style={{ color: "var(--color-tertiary)" }}>
-            © {year} {siteConfig.name}
-          </span>
-          <span
-            className="mono-kicker"
-            style={{
-              color: "var(--color-ink-faint)",
-              letterSpacing: "0.25em",
-              fontSize: "0.7rem"
-            }}
-          >
-            UNDISPUTED
-          </span>
+          {/* Social Icons & Back to top */}
+          <div className="flex items-center gap-2">
+            <a
+              href={siteConfig.github.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-white border-2 border-black text-black hover:bg-[#A6FA3C] shadow-neo-sm transition-all"
+              title="GitHub Profile"
+            >
+              <GithubIcon size={16} />
+            </a>
+            <a
+              href={`mailto:${siteConfig.email}`}
+              className="p-2 bg-white border-2 border-black text-black hover:bg-[#FF499E] shadow-neo-sm transition-all"
+              title="Send Email"
+            >
+              <Mail className="w-4 h-4 stroke-[2]" />
+            </a>
+            <a
+              href={siteConfig.linkedin.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 bg-white border-2 border-black text-black hover:bg-[#6366F1] hover:text-white shadow-neo-sm transition-all"
+              title="LinkedIn Profile"
+            >
+              <LinkedinIcon size={16} />
+            </a>
+
+            {/* Back to top */}
+            <button
+              onClick={scrollToTop}
+              className="p-2 bg-[#A6FA3C] border-2 border-black text-black hover:translate-y-[-2px] shadow-neo-sm transition-all ml-2"
+              title="Back to Top"
+            >
+              <ArrowUp className="w-4 h-4 stroke-[3]" />
+            </button>
+          </div>
+
         </div>
       </div>
-
-      <style>{`
-        .footer-link {
-          font-family: var(--font-inter);
-          font-size: 0.9375rem;
-          color: var(--color-ink);
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          transition: color 0.15s ease;
-        }
-        .footer-link:hover {
-          color: var(--color-secondary);
-        }
-      `}</style>
     </footer>
   );
 }

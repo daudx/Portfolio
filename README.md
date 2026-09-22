@@ -1,6 +1,6 @@
 # Dawood Sajid — Personal Portfolio
 
-An editorial-style, ultra-performance personal portfolio built for **Muhammad Dawood Bin Sajid (Daud)** — AI Developer @ [DEVNOZ](https://devnoz.com).
+An editorial-style, ultra-performance personal portfolio built for **Muhammad Dawood Bin Sajid (Daud)**  AI Developer @ [DEVNOZ](https://devnoz.com).
 
 Featuring a modern dark-mode design system with copper/amber accents, live GitHub GraphQL API integrations, dynamic project showcase cards, and high-performance server-side rendering.
 
