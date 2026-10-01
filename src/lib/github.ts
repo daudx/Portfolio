@@ -160,18 +160,18 @@ async function fetchRepositoriesInternal(): Promise<GitHubRepo[]> {
     const data = await res.json();
     if (!Array.isArray(data)) return [];
 
-    const repos: GitHubRepo[] = data.map((item: any) => ({
-      id: item.id,
-      name: item.name,
-      fullName: item.full_name,
-      description: item.description || "",
-      language: item.language || null,
-      stars: item.stargazers_count || 0,
-      forks: item.forks_count || 0,
-      updatedAt: item.updated_at,
-      htmlUrl: item.html_url,
-      homepage: item.homepage || null,
-      topics: Array.isArray(item.topics) ? item.topics : [],
+    const repos: GitHubRepo[] = data.map((item: Record<string, unknown>) => ({
+      id: item.id as number,
+      name: item.name as string,
+      fullName: item.full_name as string,
+      description: (item.description as string | null) ?? "",
+      language: (item.language as string | null) ?? null,
+      stars: (item.stargazers_count as number) || 0,
+      forks: (item.forks_count as number) || 0,
+      updatedAt: item.updated_at as string,
+      htmlUrl: item.html_url as string,
+      homepage: (item.homepage as string | null) ?? null,
+      topics: Array.isArray(item.topics) ? (item.topics as string[]) : [],
       isFork: Boolean(item.fork)
     }));
 
@@ -291,7 +291,7 @@ function generateFallbackContributions(): GitHubContributionsData {
   const oneYearAgo = new Date(today);
   oneYearAgo.setDate(today.getDate() - 364);
 
-  let currentDate = new Date(oneYearAgo);
+  const currentDate = new Date(oneYearAgo);
   while (currentDate <= today) {
     const dateStr = currentDate.toISOString().split("T")[0];
     const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
@@ -364,8 +364,8 @@ export async function getGitHubContributions(): Promise<GitHubContributionsData>
         const cal = json?.data?.user?.contributionsCollection?.contributionCalendar;
         if (cal) {
           const days: ContributionDay[] = [];
-          const weeks: ContributionWeek[] = cal.weeks.map((w: any) => ({
-            days: w.contributionDays.map((d: any) => {
+          const weeks: ContributionWeek[] = cal.weeks.map((w: Record<string, unknown[]>) => ({
+            days: (w.contributionDays as Record<string, unknown>[]).map((d: Record<string, unknown>) => {
               const levelMap: Record<string, 0 | 1 | 2 | 3 | 4> = {
                 NONE: 0,
                 FIRST_QUARTILE: 1,
@@ -373,10 +373,11 @@ export async function getGitHubContributions(): Promise<GitHubContributionsData>
                 THIRD_QUARTILE: 3,
                 FOURTH_QUARTILE: 4
               };
+              const count = d.contributionCount as number;
               const dayObj: ContributionDay = {
-                date: d.date,
-                count: d.contributionCount,
-                level: levelMap[d.contributionLevel] ?? (d.contributionCount > 0 ? 1 : 0)
+                date: d.date as string,
+                count,
+                level: levelMap[d.contributionLevel as string] ?? (count > 0 ? 1 : 0)
               };
               days.push(dayObj);
               return dayObj;
@@ -385,7 +386,7 @@ export async function getGitHubContributions(): Promise<GitHubContributionsData>
 
           const { currentStreak, longestStreak } = calculateStreaks(days);
           return {
-            totalContributions: cal.totalContributions,
+            totalContributions: cal.totalContributions as number,
             currentStreak,
             longestStreak,
             weeks,
@@ -453,25 +454,28 @@ export async function getGitHubEvents(): Promise<GitHubActivityEvent[]> {
     if (!Array.isArray(data)) return [];
 
     return data
-      .filter((ev: any) => ["PushEvent", "CreateEvent", "WatchEvent", "PublicEvent", "IssuesEvent"].includes(ev.type))
+      .filter((ev: Record<string, unknown>) => ["PushEvent", "CreateEvent", "WatchEvent", "PublicEvent", "IssuesEvent"].includes(ev.type as string))
       .slice(0, 6)
-      .map((ev: any) => {
+      .map((ev: Record<string, unknown>) => {
         let actionSummary = "Activity on repository";
+        const payload = ev.payload as Record<string, unknown> | undefined;
+        const repo = ev.repo as Record<string, unknown> | undefined;
         if (ev.type === "PushEvent") {
-          const commits = ev.payload?.commits?.length || 1;
+          const commits = (payload?.commits as unknown[] | undefined)?.length ?? 1;
           actionSummary = `Pushed ${commits} commit${commits > 1 ? "s" : ""}`;
         } else if (ev.type === "CreateEvent") {
-          actionSummary = `Created ${ev.payload?.ref_type || "repository"}`;
+          actionSummary = `Created ${(payload?.ref_type as string | undefined) ?? "repository"}`;
         } else if (ev.type === "WatchEvent") {
           actionSummary = "Starred repository";
         }
 
+        const repoName = repo?.name as string | undefined;
         return {
-          id: ev.id,
-          type: ev.type,
-          repoName: ev.repo?.name ? ev.repo.name.replace(`${GITHUB_USERNAME}/`, "") : "repository",
-          repoUrl: `https://github.com/${ev.repo?.name || GITHUB_USERNAME}`,
-          createdAt: ev.created_at,
+          id: ev.id as string,
+          type: ev.type as string,
+          repoName: repoName ? repoName.replace(`${GITHUB_USERNAME}/`, "") : "repository",
+          repoUrl: `https://github.com/${repoName ?? GITHUB_USERNAME}`,
+          createdAt: ev.created_at as string,
           actionSummary
         };
       });

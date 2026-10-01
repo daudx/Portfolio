@@ -10,42 +10,50 @@ export interface JourneyMilestone {
 export const journeyMilestones: JourneyMilestone[] = [
   {
     year: "2021",
-    title: "HTML, CSS, JS",
-    subtitle: "First Web Apps",
-    description: "Built foundational web applications, static pages, and interactive scripts. Mastered core JavaScript and DOM manipulation.",
-    highlightTech: ["HTML5", "CSS3", "JavaScript", "DOM"],
+    title: "FOUNDATIONS & WEB BASICS",
+    subtitle: "First Code & Algorithms",
+    description: "Built foundational web projects and discovered a deep passion for programming. Mastered vanilla JavaScript, DOM manipulation, semantic HTML, and core algorithms.",
+    highlightTech: ["HTML5", "CSS3", "JavaScript", "Algorithms"],
     yValue: 20
   },
   {
     year: "2022",
-    title: "REACT & NODE",
-    subtitle: "Full-Stack MERN",
-    description: "Expanded into single page applications, state management, REST APIs, Express servers, and database integration.",
-    highlightTech: ["React", "Node.js", "Express", "MongoDB"],
-    yValue: 35
+    title: "FULL-STACK & DATABASE ENGINEERING",
+    subtitle: "MERN & University Journey",
+    description: "Expanded into single page applications, React state patterns, Node.js servers, and relational modeling at Bahria University.",
+    highlightTech: ["React", "Node.js", "Express", "PostgreSQL", "Git"],
+    yValue: 38
   },
   {
     year: "2023",
-    title: "FASTAPI & DOCKER",
-    subtitle: "Systems Architecture",
-    description: "Architected high-throughput Python backends, microservices, relational PostgreSQL schemas, and containerized deployments.",
-    highlightTech: ["FastAPI", "Python", "PostgreSQL", "Docker"],
-    yValue: 50
+    title: "SYSTEMS, FASTAPI & CONTAINERIZATION",
+    subtitle: "Backend Specialization",
+    description: "Architected high-throughput Python backends with FastAPI, containerized workflows with Docker, and explored low-level systems programming in 8086 Assembly.",
+    highlightTech: ["Python", "FastAPI", "Docker", "PostgreSQL", "8086 Assembly"],
+    yValue: 56
   },
   {
     year: "2024",
-    title: "WEB AI & RAG",
-    subtitle: "Vector DBs & Agents",
-    description: "Engineered legal retrieval pipelines, document intelligence platforms, dense embeddings, vector search, and custom AI agents.",
-    highlightTech: ["LangChain", "Vector DBs", "RAG", "Embeddings"],
-    yValue: 72
+    title: "PRODUCTION RAG & AI RETRIEVAL",
+    subtitle: "Vector Search & Legal AI",
+    description: "Engineered specialized retrieval systems, vector database pipelines, and grounded document intelligence applications with LangChain.",
+    highlightTech: ["LangChain", "Vector DBs", "RAG", "Embeddings", "TypeScript"],
+    yValue: 74
   },
   {
-    year: "2025+",
-    title: "AUTONOMOUS AGENTS",
-    subtitle: "More to come ->",
-    description: "Focusing on multi-agent orchestration systems, sub-second inference pipelines, and scalable enterprise AI products.",
-    highlightTech: ["Agents", "LLM Evaluation", "Real-Time AI", "Edge Computing"],
-    yValue: 95
+    year: "2025",
+    title: "ENTERPRISE PRODUCTS & DESKTOP POS",
+    subtitle: "Full-Stack Deployment",
+    description: "Shipped FireCrust offline desktop POS with SQLite, built DawaCheck healthcare verification, and led technical workshops at NinjasCode.",
+    highlightTech: ["Next.js", "Electron", "SQLite", "Tailwind CSS", "FastAPI"],
+    yValue: 88
+  },
+  {
+    year: "2026",
+    title: "PRODUCTION AI & SCALED PLATFORMS",
+    subtitle: "Current Focus · DEVNOZ",
+    description: "Leading AI development at DEVNOZ, building production-grade RAG architectures with strict provenance, real-time call center telephony, and final year capstone.",
+    highlightTech: ["Production RAG", "Next.js App Router", "FastAPI", "pgvector", "PostgreSQL"],
+    yValue: 100
   }
 ];

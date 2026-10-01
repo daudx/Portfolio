@@ -1,33 +1,46 @@
 @import "tailwindcss";
 
 /* ================================================================
-   NEO-BRUTALIST WIREFRAME TECH — DESIGN TOKENS
+   EDITORIAL / TECHNICAL DESIGN SYSTEM TOKENS
    ================================================================ */
 
 :root {
-  /* Neo Palette */
-  --neo-bg: #F5F5EE;
-  --neo-card-bg: #FFFFFF;
-  --neo-green: #A6FA3C;
-  --neo-green-hover: #96EA2C;
-  --neo-pink: #FF499E;
-  --neo-pink-hover: #EF398E;
-  --neo-purple: #6366F1;
-  --neo-purple-hover: #4F46E5;
-  --neo-yellow: #FFD028;
-  --neo-cyan: #38BDF8;
-  --neo-border-color: #000000;
-  --neo-text: #000000;
-  --neo-muted: #555555;
-  --neo-faint: #888888;
+  /* Light Palette Defaults */
+  --bg-canvas: #F6F4EF;
+  --bg-card: #FFFFFF;
+  --bg-surface: #EFECE6;
+  --border-subtle: #D8D4C9;
+  --border-strong: #121212;
 
-  /* Fonts */
-  --font-inter: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Space Mono", ui-monospace, monospace;
+  --color-primary: #121212;
+  --color-accent: #D96C3A;       /* Signature Terracotta */
+  --color-accent-hover: #c85b29;
+  --color-ink: #121212;
+  --color-ink-muted: #55554D;
+  --color-ink-faint: #807E75;
+
+  --font-sans: var(--font-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+.dark {
+  /* Dark Editorial / Terminal Palette */
+  --bg-canvas: #0A0A0A;
+  --bg-card: #121212;
+  --bg-surface: #1A1A18;
+  --border-subtle: #2A2A28;
+  --border-strong: #3A3A38;
+
+  --color-primary: #F6F4EF;
+  --color-accent: #D96C3A;       /* Consistent Accent */
+  --color-accent-hover: #e07746;
+  --color-ink: #F6F4EF;
+  --color-ink-muted: #B4B0A6;
+  --color-ink-faint: #7A7870;
 }
 
 /* ================================================================
-   GLOBAL RESET & GRAPH PAPER GRID BACKGROUND
+   GLOBAL RESET & ACCESSIBILITY
    ================================================================ */
 
 * {
@@ -38,106 +51,75 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--neo-bg);
-  color: var(--neo-text);
-  font-family: var(--font-inter);
+  background-color: var(--bg-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
   overflow-x: hidden;
-  line-height: 1.5;
-  
-  /* Graph Paper Grid Pattern */
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
-  background-position: center center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Accessible focus outline */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Prefers-reduced-motion: disable non-essential transitions and animations */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ================================================================
-   NEO-BRUTALIST CONTAINER & UTILITIES
+   LAYOUT CONTAINERS & TYPOGRAPHY
    ================================================================ */
 
 .page-container {
   width: 100%;
-  max-width: 1360px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 @media (min-width: 768px) {
   .page-container {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
-/* Hard Drop Shadows */
-.shadow-neo-sm {
-  box-shadow: 2px 2px 0px 0px #000000;
+/* Headline Styling */
+.font-serif-headline {
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em;
 }
 
-.shadow-neo {
-  box-shadow: 4px 4px 0px 0px #000000;
-}
-
-.shadow-neo-lg {
-  box-shadow: 6px 6px 0px 0px #000000;
-}
-
-.shadow-neo-xl {
-  box-shadow: 8px 8px 0px 0px #000000;
-}
-
-.shadow-neo-green {
-  box-shadow: 4px 4px 0px 0px var(--neo-green);
-}
-
-.shadow-neo-pink {
-  box-shadow: 4px 4px 0px 0px var(--neo-pink);
-}
-
-.shadow-neo-purple {
-  box-shadow: 4px 4px 0px 0px var(--neo-purple);
-}
-
-/* Neo Card Frames */
+/* Editorial Cards */
 .neo-card {
-  background-color: #ffffff;
-  border: 3px solid #000000;
-  box-shadow: 5px 5px 0px 0px #000000;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .neo-card-hover:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0px 0px #000000;
-}
-
-.neo-card-pink {
-  background-color: var(--neo-pink);
-  border: 3px solid #000000;
-  box-shadow: 5px 5px 0px 0px #000000;
-}
-
-.neo-card-green {
-  background-color: var(--neo-green);
-  border: 3px solid #000000;
-  box-shadow: 5px 5px 0px 0px #000000;
-}
-
-.neo-card-purple {
-  background-color: var(--neo-purple);
-  border: 3px solid #000000;
-  box-shadow: 5px 5px 0px 0px #000000;
-  color: #ffffff;
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 30px -4px rgba(217, 108, 58, 0.16);
+  transform: translateY(-2px);
 }
 
 /* Buttons */
@@ -146,66 +128,54 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.5rem 1.25rem;
+  padding: 0.625rem 1.25rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #000000;
-  background-color: #ffffff;
-  border: 2px solid #000000;
-  box-shadow: 3px 3px 0px 0px #000000;
+  color: #ffffff;
+  background-color: var(--color-primary);
+  border: 1px solid var(--border-strong);
+  border-radius: 0.5rem;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.15s ease;
+  transition: all 0.15s ease;
   text-decoration: none;
+  min-height: 44px; /* WCAG 44px minimum tap target */
 }
 
 .neo-btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px 0px #000000;
+  opacity: 0.92;
+  transform: translateY(-1px);
 }
 
 .neo-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px 0px #000000;
+  transform: translateY(0);
 }
 
 .neo-btn-green {
-  background-color: var(--neo-green);
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
 }
+
 .neo-btn-green:hover {
-  background-color: var(--neo-green-hover);
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
 }
 
 .neo-btn-pink {
-  background-color: var(--neo-pink);
-  color: #000000;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
 }
+
 .neo-btn-pink:hover {
-  background-color: var(--neo-pink-hover);
+  background-color: var(--color-accent-hover);
 }
 
-.neo-btn-purple {
-  background-color: var(--neo-purple);
-  color: #ffffff;
-}
-.neo-btn-purple:hover {
-  background-color: var(--neo-purple-hover);
-}
-
-.neo-btn-black {
-  background-color: #000000;
-  color: #ffffff;
-  box-shadow: 3px 3px 0px 0px var(--neo-green);
-}
-.neo-btn-black:hover {
-  background-color: #1a1a1a;
-  box-shadow: 4px 4px 0px 0px var(--neo-green);
-}
-
-/* Badges & Tags */
+/* Badges */
 .neo-badge {
   display: inline-flex;
   align-items: center;
@@ -213,54 +183,27 @@ body {
   padding: 0.25rem 0.625rem;
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 1.5px solid #000000;
-  box-shadow: 2px 2px 0px 0px #000000;
-  background-color: #ffffff;
-  color: #000000;
-}
-
-.neo-badge-green {
-  background-color: var(--neo-green);
-}
-
-.neo-badge-pink {
-  background-color: var(--neo-pink);
-}
-
-.neo-badge-purple {
-  background-color: var(--neo-purple);
-  color: #ffffff;
-}
-
-.mono {
-  font-family: var(--font-mono);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.375rem;
+  background-color: var(--bg-surface);
+  color: var(--color-ink);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--neo-bg);
-  border-left: 2px solid #000;
+  background: var(--bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #000000;
-  border-radius: 0px;
+  background: var(--border-subtle);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--neo-pink);
-}
-
-/* Pulse animation */
-@keyframes neo-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
-}
-.neo-pulse {
-  animation: neo-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background: var(--color-accent);
 }

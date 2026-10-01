@@ -5,6 +5,7 @@ export interface Certification {
   year: string;
   title: string;
   description: string;
+  // TODO: Dawood to supply real credential URLs for each certification
   credentialUrl?: string;
   skills: string[];
 }
@@ -17,7 +18,8 @@ export const certifications: Certification[] = [
     year: "2023",
     title: "META FRONT-END DEVELOPER",
     description: "Advanced React architectures, responsive design principles, UI test design, state management, and performance optimization.",
-    credentialUrl: "https://coursera.org/verify/professional-cert/meta-frontend",
+    // TODO: Supply real Meta Front-End Developer certificate URL (leave undefined or supply valid link)
+    credentialUrl: undefined,
     skills: ["React", "JavaScript", "CSS3", "UI/UX", "Testing"]
   },
   {
@@ -27,7 +29,8 @@ export const certifications: Certification[] = [
     year: "2024",
     title: "GOOGLE ADVANCED DATA ANALYTICS",
     description: "Regression modeling, predictive machine learning pipelines, exploratory data analysis, and advanced SQL data extraction.",
-    credentialUrl: "https://coursera.org/verify/professional-cert/google-data",
+    // TODO: Supply real Google Advanced Data Analytics certificate URL
+    credentialUrl: undefined,
     skills: ["Python", "Predictive Modeling", "SQL", "Statistics", "Machine Learning"]
   },
   {
@@ -37,7 +40,8 @@ export const certifications: Certification[] = [
     year: "2024",
     title: "LANGCHAIN & RAG SYSTEMS",
     description: "Vector stores, dense document embeddings, hybrid lexical/vector search, agentic routing, and multi-doc QA pipelines.",
-    credentialUrl: "https://deeplearning.ai/verify/rag-systems",
+    // TODO: Supply real DeepLearning.AI RAG certificate URL
+    credentialUrl: undefined,
     skills: ["LangChain", "Vector DBs", "RAG", "LLMs", "FastAPI"]
   }
 ];

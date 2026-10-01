@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Star, GitFork, BookOpen, ArrowUpRight, Code2 } from "lucide-react";
+import { Star, GitFork, BookOpen, ArrowUpRight } from "lucide-react";
 import { GitHubRepo } from "@/lib/github";
 import { formatDate, getLanguageColor } from "@/lib/utils";
-import { TechChip } from "@/components/ui/tech-chip";
 import { cn } from "@/lib/utils";
 
 interface GitHubRepositoriesProps {

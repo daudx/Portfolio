@@ -20,6 +20,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(repos);
   } catch (error) {
+    console.error("Repositories route error:", error);
     return NextResponse.json(
       { error: "Failed to fetch GitHub repositories" },
       { status: 500 }

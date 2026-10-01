@@ -8,6 +8,7 @@ export async function GET() {
     const data = await getGitHubContributions();
     return NextResponse.json(data);
   } catch (error) {
+    console.error("Contributions route error:", error);
     return NextResponse.json(
       { error: "Failed to fetch GitHub contributions" },
       { status: 500 }

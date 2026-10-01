@@ -7,7 +7,6 @@ interface GitHubContributionGraphProps {
   contributions: GitHubContributionsData;
 }
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function getCellClass(level: number, count: number): string {
   if (count === 0 || level === 0) return "heat-0";
